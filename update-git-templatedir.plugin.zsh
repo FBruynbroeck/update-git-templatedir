@@ -32,6 +32,14 @@ function _upgrade_templatedir() {
   env TEMPLATEDIR=$templatedir sh $basedir/upgrade.sh
   # update the templatedir file
   _update_templatedir_update
+  cmd=$UPDATE_TEMPLATEDIR_CMD
+  if [[ ! -z "$cmd" ]]; then
+      echo "[Git templatedir] Would you like to run this command: $cmd ? [Y/n]: \c"
+      read line
+      if [[ "$line" == Y* ]] || [[ "$line" == y* ]] || [ -z "$line" ]; then
+        eval $cmd
+      fi
+  fi
 }
 
 epoch_target=$UPDATE_TEMPLATEDIR_DAYS
